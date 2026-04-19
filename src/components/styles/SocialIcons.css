@@ -78,19 +78,18 @@
   right: 0;
   width: auto;
   text-wrap: nowrap;
-  letter-spacing: 4px;
-  font-size: 15px;
-  line-height: 15px;
+  letter-spacing: 2px;
+  font-size: 13px;
+  line-height: 13px;
   font-weight: 600;
-  color: #5e5e5e;
+  color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: 0.5s;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: left bottom;
   transform: translateX(100%) rotateZ(-90deg);
 }
 .resume-button:hover {
-  color: #fff;
-  text-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+  color: rgba(255, 255, 255, 0.9);
 }
 div.resume-button span {
   color: #fff;
