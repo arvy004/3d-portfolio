@@ -5,32 +5,25 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
-    title: "CallHQ",
-    category: "Voice AI Calling Platform",
-    tools: "Voice AI, Calling Automation, CRM Integrations",
-    image: "/images/callhq.png",
-    link: "https://callhq.ai",
+    title: "Arkire",
+    category: "Chief Product Officer",
+    tools: "Product Strategy, Community Platforms, Automation, Leadership",
+    image: "/images/arkire_phoenix.png",
+    link: "https://arkirehq.com",
   },
   {
-    title: "Whatsapp Automation",
-    category: "WABA Application",
-    tools: "WhatsApp Business API, Workflow Automation, Notifications",
-    image: "/images/whatsapp.png",
-    link: "https://whatsapp.callhq.ai",
+    title: "TSA - Tech Student Association",
+    category: "Member & Competitor",
+    tools: "Robotics, Tech Events, Teamwork, Communication",
+    image: "/images/tsa_logo.png",
+    link: "https://tsaweb.org",
   },
   {
-    title: "Broki",
-    category: "Real Estate Platform for FnB Industry",
-    tools: "Property Discovery, Lead Management, Marketplace Workflows",
-    image: "/images/broki.png",
-    link: "https://broki.in",
-  },
-  {
-    title: "Orrdr.com",
-    category: "Ecommerce Platform and Mobile App",
-    tools: "Ecommerce, Mobile Experience, Order Management",
-    image: "/images/orrdr.png",
-    link: "https://orrdr.com",
+    title: "Adobe Visual Design",
+    category: "Professional Certification",
+    tools: "Adobe Certified Professional in Visual Design (Photoshop)",
+    image: "/images/adobe_expert.png",
+    link: "https://www.credly.com/users/arnav-shelke.255d206f/edit#credly",
   },
 ];
 

@@ -18,8 +18,8 @@
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  --accentColor: #5eead4;
-  --backgroundColor: #0a0e17;
+  --accentColor: #A855F7;
+  --backgroundColor: #000000;
   --vh: 100vh;
   --vh: 100svh;
 }
@@ -134,4 +134,60 @@ body {
   .techstack h2 {
     font-size: 40px;
   }
+}
+
+/* Micro-animations */
+.what-tags, .carousel-dot, .carousel-arrow, .contact-social, button {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.what-tags:hover {
+  transform: translateY(-3px);
+  background-color: var(--accentColor) !important;
+  color: white !important;
+  box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
+}
+
+.carousel-image-wrapper {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.carousel-slide:hover .carousel-image-wrapper {
+  transform: scale(1.03);
+}
+
+.section-container h2 span {
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.section-container h2:hover span {
+  color: var(--accentColor);
+}
+
+/* Global UX Polish */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: rgba(168, 85, 247, 0.4); /* Subtle purple */
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--backgroundColor);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.6); /* Purple accent on hover */
 }

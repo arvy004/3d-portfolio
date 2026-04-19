@@ -1,10 +1,10 @@
 .contact-section {
   margin: auto;
   padding-bottom: 100px;
-  margin-top: 100px;
+  padding-top: 200px;
   position: relative;
   z-index: 2;
-  background-color: var(--backgroundColor);
+  background: linear-gradient(180deg, #00000000 0%, #050810 50%);
 }
 
 .contact-section h3 {
@@ -14,9 +14,18 @@
   margin: 0;
 }
 
+.contact-wrapper {
+  display: flex;
+  gap: 100px;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
 .contact-flex {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 40px;
+  width: 50%;
 }
 
 .contact-flex h4 {
@@ -57,6 +66,88 @@ a.contact-social {
   display: flex;
   gap: 10px;
   opacity: 0.5;
+}
+
+.contact-form-box {
+  width: 50%;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 100px;
+}
+
+.contact-form-box h4 {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 30px 0;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 18px 20px;
+  font-family: inherit;
+  font-size: 16px;
+  color: white;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accentColor);
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-btn {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 16px 30px;
+  border-radius: 30px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: var(--accentColor);
+  color: white;
+  box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-result {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  opacity: 0.8;
 }
 
 @media only screen and (max-width: 1600px) {

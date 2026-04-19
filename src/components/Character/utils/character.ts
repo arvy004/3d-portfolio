@@ -3,6 +3,37 @@ import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
 import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
 import { decryptFile } from "./decrypt";
 
+function createLogoTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 512;
+  canvas.height = 512;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+
+  // Fill with Beige background (to blend with hat)
+  ctx.fillStyle = "#d2b48c";
+  ctx.fillRect(0, 0, 512, 512);
+
+  // Draw Black Circle (Logo Container)
+  ctx.beginPath();
+  ctx.arc(256, 380, 20, 0, Math.PI * 2);
+  ctx.fillStyle = "#000000";
+  ctx.fill();
+
+  // Draw Purple Text "RV"
+  ctx.fillStyle = "#A855F7"; // Purple
+  ctx.font = "bold 20px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("RV", 256, 382);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.needsUpdate = true;
+  return texture;
+}
+
+const logoTexture = createLogoTexture();
+
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
   scene: THREE.Scene,
@@ -32,15 +63,56 @@ const setCharacter = (
               if (child.isMesh) {
                 const mesh = child as THREE.Mesh;
 
-                // Change clothing colors to match site theme
+                // Change materials to match Arnav's appearance and site theme
                 if (mesh.material) {
-                  if (mesh.name === "BODY.SHIRT") { // The shirt mesh
-                    const newMat = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
-                    newMat.color = new THREE.Color("#8B4513");
+                  const meshName = mesh.name.toLowerCase();
+                  const newMat = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
+
+                  // Skin Tone (Brown/Tan)
+                  if (meshName.includes("skin") || meshName.includes("body") || meshName.includes("head")) {
+                    newMat.color = new THREE.Color("#8d5524"); // Rich brown skin tone
                     mesh.material = newMat;
-                  } else if (mesh.name === "Pant") {
-                    const newMat = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
+                  }
+                  // Hair Color (Black)
+                  else if (meshName.includes("hair")) {
+                    newMat.color = new THREE.Color("#050505");
+                    mesh.material = newMat;
+                  }
+                  // Cap/Hat Restore & Branding
+                  else if (
+                    meshName.includes("cap") ||
+                    meshName.includes("hat") ||
+                    meshName.includes("brim") ||
+                    meshName.includes("visor") ||
+                    meshName.includes("snapback")
+                  ) {
+                    newMat.color = new THREE.Color("#d2b48c"); // Premium Beige
+                    newMat.roughness = 0.8;
+                    
+                    // Apply RV Logo to the front panel (CAP001)
+                    if (meshName.includes("cap001") && logoTexture) {
+                      newMat.map = logoTexture;
+                    }
+                    
+                    mesh.material = newMat;
+                    mesh.visible = true;
+                  }
+                  // Hide Mustache/Facial Hair
+                  else if (
+                    meshName.includes("mustache") || 
+                    meshName.includes("moustache") || 
+                    meshName.includes("facialhair")
+                  ) {
+                    mesh.visible = false;
+                  }
+                  // Clothing: Suit (Black)
+                  else if (meshName.includes("suit") || meshName.includes("pant") || meshName.includes("blazer")) {
                     newMat.color = new THREE.Color("#000000");
+                    mesh.material = newMat;
+                  }
+                  // Clothing: Shirt (Purple Accent)
+                  else if (meshName.includes("shirt")) {
+                    newMat.color = new THREE.Color("#6b21a8"); // Purple shirt/accent
                     mesh.material = newMat;
                   }
                 }
