@@ -30,7 +30,7 @@ const projects = [
 const Work = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [, setIsAutoPlaying] = useState(false);
   const autoPlayRef = useRef<ReturnType<typeof setInterval>>();
 
   const goToSlide = useCallback(
