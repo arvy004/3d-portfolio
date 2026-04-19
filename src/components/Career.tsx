@@ -1,40 +1,8 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles/Career.css";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Career = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-
-    const highlights = sectionRef.current.querySelectorAll(".apple-highlight");
-
-    ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top 50%",
-      once: true,
-      onEnter: () => {
-        highlights.forEach((el, i) => {
-          gsap.delayedCall(i * 0.3, () => {
-            el.classList.add("highlighted");
-          });
-        });
-      },
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === sectionRef.current) t.kill();
-      });
-    };
-  }, []);
-
   return (
-    <div className="career-section section-container" ref={sectionRef}>
+    <div className="career-section section-container">
       <div className="career-container">
         <h2>
           My career <span>&</span>
