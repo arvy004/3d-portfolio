@@ -1,3 +1,4 @@
+import { FaGithub } from "react-icons/fa6";
 
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
@@ -54,6 +55,15 @@ const SocialIcons = () => {
   return (
     <div className="icons-section">
       <div className="social-icons" data-cursor="icons" id="social">
+        <span className="github-circle">
+          <a
+            href="https://github.com/arvy004"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FaGithub />
+          </a>
+        </span>
       </div>
       <a
         className="resume-button"

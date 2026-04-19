@@ -31,6 +31,13 @@
   position: relative;
   display: flex;
 }
+.github-circle {
+  background-color: teal;
+  border-radius: 50%;
+}
+.github-circle a {
+  color: white !important;
+}
 .social-icons a {
   --siLeft: 50%;
   --siTop: 50%;
