@@ -62,7 +62,7 @@ const SocialIcons = () => {
       </div>
       <a
         className="resume-button"
-        href="#"
+        href="/Arnav-Shelke.pdf"
         target="_blank"
         rel="noreferrer"
       >

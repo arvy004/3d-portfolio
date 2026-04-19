@@ -48,7 +48,7 @@
 @media only screen and (min-width: 1025px) {
   .about-section {
     width: var(--cWidth);
-    justify-content: right;
+    justify-content: flex-end;
     max-width: 1920px;
     height: var(--vh);
     padding: 0px;
@@ -56,11 +56,11 @@
   }
   .about-me {
     padding: 0px;
-    width: 60%;
+    width: 48%;
   }
   .about-me p {
-    font-size: 1.9vw;
-    line-height: 2.3vw;
+    font-size: 1.6vw;
+    line-height: 2.0vw;
   }
 }
 @media only screen and (min-width: 1950px) {
