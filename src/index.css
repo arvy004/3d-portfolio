@@ -214,7 +214,8 @@ html {
     90deg,
     #30d158 0%,
     #34c759 50%,
-    rgba(255, 255, 255, 0.92) 50%
+    #ffffff 50.01%,
+    #ffffff 100%
   );
   background-size: 200% 100%;
   background-position: 100% 0;
