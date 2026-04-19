@@ -1,4 +1,4 @@
-import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
+import { lazy, PropsWithChildren, Suspense, useEffect, useState, useCallback } from "react";
 import About from "./About";
 import Career from "./Career";
 import Contact from "./Contact";
@@ -11,23 +11,49 @@ import Work from "./Work";
 import setSplitText from "./utils/splitText";
 
 const TechStack = lazy(() => import("./TechStack"));
+const LoadingFallback = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '200px',
+    color: 'rgba(255, 255, 255, 0.6)'
+  }}>
+    Loading...
+  </div>
+);
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
-    window.innerWidth > 1024
+    typeof window !== 'undefined' ? window.innerWidth > 1024 : false
   );
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const resizeHandler = () => {
-      setSplitText();
-      setIsDesktopView(window.innerWidth > 1024);
+    setIsClient(true);
+  }, []);
+  
+  const handleResize = useCallback(() => {
+    setSplitText();
+    setIsDesktopView(window.innerWidth > 1024);
+  }, []);
+  
+  useEffect(() => {
+    if (!isClient) return;
+    
+    handleResize();
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(handleResize, 150);
     };
-    resizeHandler();
-    window.addEventListener("resize", resizeHandler);
+    
+    window.addEventListener("resize", debouncedResize, { passive: true });
     return () => {
-      window.removeEventListener("resize", resizeHandler);
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(resizeTimeout);
     };
-  }, [isDesktopView]);
+  }, [isClient, handleResize]);
 
   return (
     <div className="container-main">
@@ -44,7 +70,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Career />
             <Work />
             {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
+              <Suspense fallback={<LoadingFallback />}>
                 <TechStack />
               </Suspense>
             )}

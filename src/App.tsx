@@ -8,6 +8,9 @@ import { LoadingProvider } from "./context/LoadingProvider";
 const App = () => {
   return (
     <>
+      <a href="#landingDiv" className="skip-to-main">
+        Skip to main content
+      </a>
       <LoadingProvider>
         <Suspense>
           <MainContainer>

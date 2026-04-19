@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
@@ -9,6 +9,28 @@ gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
 const Navbar = () => {
+  const resizeTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  
+  const handleResize = useCallback(() => {
+    if (resizeTimeoutRef.current) {
+      clearTimeout(resizeTimeoutRef.current);
+    }
+    resizeTimeoutRef.current = setTimeout(() => {
+      ScrollSmoother.refresh(true);
+    }, 150);
+  }, []);
+  
+  const handleLinkClick = useCallback((e: MouseEvent) => {
+    if (window.innerWidth > 1024) {
+      e.preventDefault();
+      const elem = e.currentTarget as HTMLAnchorElement;
+      const section = elem.getAttribute("data-href");
+      if (section && smoother) {
+        smoother.scrollTo(section, true, "top top");
+      }
+    }
+  }, []);
+  
   useEffect(() => {
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -23,22 +45,28 @@ const Navbar = () => {
     smoother.scrollTop(0);
     smoother.paused(true);
 
-    let links = document.querySelectorAll(".header ul a");
+    const links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
-        if (window.innerWidth > 1024) {
-          e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
-          smoother.scrollTo(section, true, "top top");
-        }
+      const element = elem as HTMLAnchorElement;
+      element.addEventListener("click", handleLinkClick);
+    });
+    
+    window.addEventListener("resize", handleResize, { passive: true });
+    
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      links.forEach((elem) => {
+        const element = elem as HTMLAnchorElement;
+        element.removeEventListener("click", handleLinkClick);
       });
-    });
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
-  }, []);
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      if (smoother) {
+        smoother.kill();
+      }
+    };
+  }, [handleResize, handleLinkClick]);
   return (
     <>
       <div className="header">

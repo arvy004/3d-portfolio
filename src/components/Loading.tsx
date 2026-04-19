@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
 
@@ -9,38 +9,47 @@ const Loading = ({ percent }: { percent: number }) => {
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
-
-  if (percent >= 100) {
-    setTimeout(() => {
-      setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
-    }, 600);
-  }
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
+    if (percent >= 100 && !loaded) {
+      timeoutRef.current = setTimeout(() => {
+        setLoaded(true);
+        timeoutRef.current = setTimeout(() => {
+          setIsLoaded(true);
+        }, 1000);
+      }, 600);
+    }
+    
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [percent, loaded]);
+
+  useEffect(() => {
+    if (isLoaded && !clicked) {
+      import("./utils/initialFX").then((module) => {
         setClicked(true);
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           if (module.initialFX) {
             module.initialFX();
           }
           setIsLoading(false);
         }, 900);
-      }
-    });
-  }, [isLoaded]);
+      });
+    }
+  }, [isLoaded, clicked]);
 
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const { currentTarget: target } = e;
     const rect = target.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     target.style.setProperty("--mouse-x", `${x}px`);
     target.style.setProperty("--mouse-y", `${y}px`);
-  }
+  }, []);
 
   return (
     <>
