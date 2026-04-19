@@ -1,8 +1,36 @@
+import { useEffect, useRef } from "react";
 import "./styles/Career.css";
 
 const Career = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const highlights = entry.target.querySelectorAll(".apple-highlight");
+            highlights.forEach((el, i) => {
+              setTimeout(() => {
+                el.classList.add("highlighted");
+              }, i * 250);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="career-section section-container">
+    <div className="career-section section-container" ref={sectionRef}>
       <div className="career-container">
         <h2>
           My career <span>&</span>
@@ -15,7 +43,7 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Chief Product Officer</h4>
+                <h4><span className="apple-highlight">Chief Product Officer</span></h4>
                 <h5>Arkire</h5>
               </div>
               <h3>PRESENT</h3>
@@ -43,7 +71,7 @@ const Career = () => {
             <div className="career-info-in">
               <div className="career-role">
                 <h4>West Cary Middle School</h4>
-                <h5>Honors Graduate</h5>
+                <h5><span className="apple-highlight">Honors Graduate</span></h5>
               </div>
               <h3>2020–23</h3>
             </div>
