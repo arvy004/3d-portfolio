@@ -128,55 +128,6 @@ const setCharacter = (
             character!.getObjectByName("footR")!.position.y = 3.36;
             character!.getObjectByName("footL")!.position.y = 3.36;
 
-            // Procedural Gold Chain
-            const chestBone = character!.getObjectByName("spine005") || character!.getObjectByName("spine006");
-            if (chestBone) {
-              const chainGroup = new THREE.Group();
-              const numLinks = 32;
-              const radiusX = 1.4;
-              const radiusZFront = 2.2;
-              const radiusZBack = 1.2;
-
-              for (let i = 0; i < numLinks; i++) {
-                const linkGeo = new THREE.TorusGeometry(0.18, 0.08, 8, 16);
-                const linkMat = new THREE.MeshStandardMaterial({
-                  color: 0xffd700,
-                  metalness: 1.0,
-                  roughness: 0.15,
-                });
-                const link = new THREE.Mesh(linkGeo, linkMat);
-                link.castShadow = true;
-                link.receiveShadow = true;
-
-                const angle = (i / numLinks) * Math.PI * 2;
-                const isFront = Math.sin(angle) > 0;
-                const radiusZ = isFront ? radiusZFront : radiusZBack;
-                
-                link.position.x = Math.cos(angle) * radiusX;
-                link.position.z = Math.sin(angle) * radiusZ;
-                
-                // Tilt links to droop down in the front
-                if (isFront) {
-                  link.position.y = -Math.sin(angle) * 1.0; 
-                }
-
-                link.rotation.y = -angle;
-                if (i % 2 === 0) {
-                  link.rotation.x = Math.PI / 2;
-                }
-
-                chainGroup.add(link);
-              }
-
-              // Adjust the overall chain position relative to the local bone
-              chainGroup.position.set(0, 0, 0);
-              
-              // Angle the necklace so it lays on the chest
-              chainGroup.rotation.x = Math.PI / 10;
-              
-              chestBone.add(chainGroup);
-            }
-
             // Monitor scale is handled by GsapScroll.ts animations
 
             dracoLoader.dispose();
