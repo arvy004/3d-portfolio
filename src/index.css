@@ -210,21 +210,13 @@ html {
 
 /* Apple-style green highlight text animation */
 .apple-highlight {
-  background: linear-gradient(
-    90deg,
-    #30d158 0%,
-    #34c759 50%,
-    #ffffff 50.01%,
-    #ffffff 100%
-  );
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+  transition: color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    -webkit-text-fill-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .apple-highlight.highlighted {
-  background-position: 0% 0;
+  color: #30d158;
+  -webkit-text-fill-color: #30d158;
 }
