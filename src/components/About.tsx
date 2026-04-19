@@ -1,32 +1,36 @@
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles/About.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const highlights = entry.target.querySelectorAll(".apple-highlight");
-            highlights.forEach((el, i) => {
-              setTimeout(() => {
-                el.classList.add("highlighted");
-              }, i * 200);
-            });
-            observer.unobserve(entry.target);
-          }
+    if (!sectionRef.current) return;
+
+    const highlights = sectionRef.current.querySelectorAll(".apple-highlight");
+
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top 60%",
+      once: true,
+      onEnter: () => {
+        highlights.forEach((el, i) => {
+          gsap.delayedCall(i * 0.25, () => {
+            el.classList.add("highlighted");
+          });
         });
       },
-      { threshold: 0.5 }
-    );
+    });
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.trigger === sectionRef.current) t.kill();
+      });
+    };
   }, []);
 
   return (
