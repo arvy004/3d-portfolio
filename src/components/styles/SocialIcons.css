@@ -32,15 +32,30 @@
   display: flex;
 }
 .github-circle {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border-radius: 50%;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.github-circle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 8px 32px rgba(168, 85, 247, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: scale(1.08);
 }
 .github-circle a {
   color: white !important;
+  transition: color 0.3s ease;
+}
+.github-circle:hover a {
+  color: var(--accentColor) !important;
 }
 .social-icons a {
   --siLeft: 50%;
@@ -75,6 +90,7 @@
 }
 .resume-button:hover {
   color: #fff;
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
 }
 div.resume-button span {
   color: #fff;

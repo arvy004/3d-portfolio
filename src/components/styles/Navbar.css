@@ -29,6 +29,10 @@
   color: #ccc;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+.header ul li:hover {
+  color: var(--accentColor);
 }
 .navbar-connect {
   position: absolute;
@@ -44,6 +48,10 @@
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
+  transition: text-shadow 0.3s ease;
+}
+.navbar-title:hover {
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
 }
 @media only screen and (min-width: 500px) {
   .header {
